@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 import streamlit as st
-import plotly.express as px
+
 
 st.set_page_config(layout="wide")
 # ESTIMATED_MARGIN = st.selectbox"Enter the Estimated margin", ("2000000", "5000000", "1000000", "7000000",
@@ -190,6 +190,3 @@ if uploaded_file is not None:
         # Display metrics in a table
         st.write("Summary")
         st.dataframe(metrics_df)
-
-    fig = px.line(df, x=df['Date'], y=df['profit'], title='Profit Over Time')
-    st.plotly_chart(fig)
