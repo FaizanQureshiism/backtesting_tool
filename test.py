@@ -68,6 +68,28 @@ def calculated_matrix(df):
     # Return to MDD
     return_mdd = overall_profit / max_drawdown
 
+    # Maximum winning streak
+    max_winning_streak = 0
+    current_streak = 0
+    for profit in pnl:
+        if profit > 0:
+            current_streak += 1
+            if current_streak > max_winning_streak:
+                max_winning_streak = current_streak
+        else:
+            current_streak = 0
+
+    # Maximum losing streak
+    max_losing_streak = 0
+    current_streak = 0
+    for profit in pnl:
+        if profit < 0:
+            current_streak += 1
+            if current_streak > max_losing_streak:
+                max_losing_streak = current_streak
+        else:
+            current_streak = 0
+
     # Prepare results as a dictionary
     results = {
         "Metric": [
@@ -82,7 +104,9 @@ def calculated_matrix(df):
             "Average Profit (Win Days  %)",
             "Average Loss (Loss Days  %)",
             "Expectancy",
-            "Return to MDD"
+            "Return to MDD",
+            "Maximum winning streak",
+            "Maximum losing streak"
         ],
         "Value": [
             ESTIMATED_MARGIN,
@@ -96,7 +120,9 @@ def calculated_matrix(df):
             avg_profit_days_combine,
             avg_loss_days_combine,
             round(expectancy, 2),
-            round(return_mdd, 2)
+            round(return_mdd, 2),
+            max_winning_streak,
+            max_losing_streak,
         ]
     }
     return pd.DataFrame(results)
