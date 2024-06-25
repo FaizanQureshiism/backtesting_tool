@@ -60,9 +60,7 @@ def calculated_matrix(df):
 
     # Expectancy
     risk_reward_ratio = round(abs(avg_profit_days / avg_loss_days), 2)
-    st.write(risk_reward_ratio)
     risk_reward_win = round(risk_reward_ratio * (win_per / 100), 2)
-    st.write(risk_reward_win)
     expectancy = risk_reward_win - (neg_per / 100)
 
     # Return to MDD
@@ -72,7 +70,7 @@ def calculated_matrix(df):
 
     total_years = total_months / 12
     total_yearly_profit = overall_profit / total_years
-
+    
     return_mdd = total_yearly_profit / max_drawdown
 
     # Maximum winning streak
