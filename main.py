@@ -66,15 +66,14 @@ def calculate_matrix(df):
     expectancy = risk_reward_win - (neg_per / 100)
 
     # Return to MDD
-    #df['Date'] = pd.to_datetime(df['Date'])
-#
-    ## Extract the year from the 'Date' column and create a new column 'Year'
-    #df['Year'] = df['Date'].dt.year
-#
-    ## Group the data by 'Year' and calculate the total 'Profit' for each year
-    #yearly_profit = df.groupby('Year')['Profit'].sum().reset_index()
-    #
-    return_mdd = overall_profit / max_drawdown
+    df["Date"] = pd.to_datetime(df["Date"])
+
+    total_months = df["Date"].dt.to_period('M').nunique()
+
+    total_years = total_months / 12
+    total_yearly_profit = overall_profit / total_years
+
+    return_mdd = total_yearly_profit / max_drawdown
 
 
     # Maximum winning streak
