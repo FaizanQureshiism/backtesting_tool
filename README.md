@@ -43,4 +43,4 @@ To run merge file too, run the following command
 
 [![Merge]](https://testpy-nffjjtgxuep93rvmpa5jme.streamlit.app/)
 
-[![Tag based testing]]([https://testpy-nffjjtgxuep93rvmpa5jme.streamlit.app/](https://backtestingtool-kzuapyndvw3d7bnpmkbw6f.streamlit.app/))
+[![Tag based testing]](https://backtestingtool-kzuapyndvw3d7bnpmkbw6f.streamlit.app/)
