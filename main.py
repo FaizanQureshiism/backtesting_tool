@@ -2,10 +2,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-
-st.set_page_config(layout="wide")
-# ESTIMATED_MARGIN = st.selectbox"Enter the Estimated margin", ("2000000", "5000000", "1000000", "7000000",
-# "500000","30000000"))
+st.set_page_config(layout="wide")  # Default wide screen 
 ESTIMATED_MARGIN = st.text_input("Enter the Estimated margin")
 
 
@@ -75,7 +72,6 @@ def calculate_matrix(df):
 
     return_mdd = total_yearly_profit / max_drawdown
 
-
     # Maximum winning streak
     max_winning_streak = 0
     current_streak = 0
@@ -99,7 +95,6 @@ def calculate_matrix(df):
             current_streak = 0
 
     strategies = [col for col in df.columns if col != "Date" and col != "Profit" and col != "profit" and col != "Day"]
-
 
     # Prepare results as a dictionary
     results = {
@@ -138,11 +133,12 @@ def calculate_matrix(df):
             len(strategies)
         ]
     }
-    return pd.DataFrame(results)
+    return pd.DataFrame(results)  # Will display all metric result
 
 
 # File uploader
-uploaded_file = st.file_uploader("Upload an Excel file", type=["xlsx", "xlsm"])
+# Takes file from the user as input
+uploaded_file = st.file_uploader("Upload an Excel file", type=["xlsx", "xlsm", "csv"])
 
 if uploaded_file is not None:
     # Read the Excel file
@@ -155,6 +151,7 @@ if uploaded_file is not None:
     selectable_columns = [col for col in df.columns if col != "Date" and col != "Profit" and col != "profit"
                           and col != "Day"]
 
+    # select all button selects all the columns inside the data to be displayed
     select_all = st.checkbox("Select all", value=selectable_columns)
     if select_all:
         selected_column = st.multiselect("Select a column to subtract from 'Profit':", selectable_columns,
