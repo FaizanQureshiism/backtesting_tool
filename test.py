@@ -3,8 +3,8 @@ import pandas as pd
 import numpy as np
 
 # Define constants
-# ESTIMATED_MARGIN = st.selectbox("Enter the Estimated margin", ("2000000", "5000000", "1000000", "7000000", "500000", "30000000"))
 ESTIMATED_MARGIN = st.text_input("Enter the Estimated margin")
+
 
 # Function to calculate metrics
 def calculated_matrix(df):
@@ -63,14 +63,14 @@ def calculated_matrix(df):
     risk_reward_win = round(risk_reward_ratio * (win_per / 100), 2)
     expectancy = risk_reward_win - (neg_per / 100)
 
-    # Return to MDD
     df["Date"] = pd.to_datetime(df["Date"])
 
+    # Calculate the number of unique months in the dataset
     total_months = df["Date"].dt.to_period('M').nunique()
 
     total_years = total_months / 12
     total_yearly_profit = overall_profit / total_years
-    
+    # Return to MDD
     return_mdd = total_yearly_profit / max_drawdown
 
     # Maximum winning streak
@@ -130,12 +130,14 @@ def calculated_matrix(df):
             max_losing_streak,
         ]
     }
-    return pd.DataFrame(results)
+    return pd.DataFrame(results)  # Will display all metric result
 
 
 # Streamlit app
+# Takes files from the user as input
 uploaded_file = st.file_uploader("Enter your first excel file here:", type=["xlsx"], accept_multiple_files=True)
 
+# Merges the multiple files by the user and sorts them by date
 if uploaded_file:
     for file in uploaded_file:
         file.seek(0)
@@ -143,7 +145,8 @@ if uploaded_file:
     raw_data = pd.concat(uploaded_data_read)
     df = raw_data.sort_values(by="Date")
 
-    col1, col2 = st.columns([2,2])
+    # Uses streamlit column to display the merged data and also metrics of the merged data
+    col1, col2 = st.columns([2, 2])
     with col1:
         st.write("After merging")
         st.dataframe(df[["Date", "Day", "Profit"]])
